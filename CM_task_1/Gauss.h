@@ -13,7 +13,3 @@ double get_triangled_matrix_determinant(const vector<vector<double>>& data, cons
 
 void get_residual(const vector<vector<double>>& data, const vector<double>& x, vector<double>& residual);
 
-
-
-
-
