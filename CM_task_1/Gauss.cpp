@@ -2,12 +2,16 @@
 #include <iostream>
 #include <iomanip>
 #include <math.h>
+#include <fstream>
+#include <optional>
+#include <string>
 
 vector<vector<double>> get_input_matrix()
 {
 	vector<vector<double>> data;
 	size_t n, m;
-	cin >> n >> m;
+	cin >> n;
+	m = n + 1;
 	vector<double> line;
 	for (size_t i = 0; i < n; i++)
 	{
@@ -23,13 +27,60 @@ vector<vector<double>> get_input_matrix()
 	return data;
 }
 
+optional<vector<vector<double>>> get_file_matrix(const string& path)
+{
+	ifstream file(path);
+	if (!file)
+	{
+		cout << "Не удалось открыть файл" << endl;
+		return {};
+	}
+
+	vector<vector<double>> data;
+	size_t n, m;
+	file >> n >> m;
+	vector<double> line;
+	for (size_t i = 0; i < n; i++)
+	{
+		for (size_t j = 0; j < m; j++)
+		{
+			double a;
+			file >> a;
+			line.push_back(a);
+		}
+		data.push_back(line);
+		line.clear();
+	}
+
+	return data;
+}
+
+//vector<vector<double>> get_input()
+//{
+//	cout << "Введите \"c\", если желаете ввести данные с клавиатуры и \"f\", если данные поступят из файла" << endl;
+//	char c;
+//	cin >> c;
+//	if (c == 'f')
+//	{
+//		cout << "Введите путь к файлу:" << endl;
+//		string path;
+//		cin >> path;
+//		optional<vector<vector<double>>> opt_data = get_file_matrix(path);
+//		if (!opt_data.has_value())
+//		{
+//
+//		}
+//	}
+//	return vector<vector<double>>();
+//}
+
 void print_matrix(const vector<vector<double>>& data)
 {
 	for (size_t i = 0; i < data.size(); i++)
 	{
 		for (size_t j = 0; j < data[0].size() - 1; j++)
 		{
-			cout << setw(3) << left << data[i][j] << " ";
+			cout << setw(10) << left << data[i][j] << " ";
 		}
 		cout << "| " << data[i][data[0].size() - 1];
 		cout << endl;
