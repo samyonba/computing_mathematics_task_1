@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+    // реализовать ввод из файла
     vector<vector<double>> data = get_input_matrix();    
 
     size_t swap_lines_counter = 0;
