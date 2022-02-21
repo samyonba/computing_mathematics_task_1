@@ -5,6 +5,7 @@
 #include <fstream>
 #include <optional>
 #include <string>
+#include <sstream>
 
 vector<vector<double>> get_input_matrix()
 {
@@ -76,11 +77,29 @@ optional<vector<vector<double>>> get_file_matrix(const string& path)
 
 void print_matrix(const vector<vector<double>>& data)
 {
+	size_t max_length = 0;
+	
 	for (size_t i = 0; i < data.size(); i++)
 	{
 		for (size_t j = 0; j < data[0].size() - 1; j++)
 		{
-			cout << setw(10) << left << data[i][j] << " ";
+			stringstream s_value;
+			s_value << data[i][j];
+			string current = s_value.str();
+			
+			if (current.length() > max_length)
+			{
+				max_length = current.length();
+			}
+			s_value.clear();
+		}
+	}
+
+	for (size_t i = 0; i < data.size(); i++)
+	{
+		for (size_t j = 0; j < data[0].size() - 1; j++)
+		{
+			cout << setw(max_length + 1) << left << data[i][j];
 		}
 		cout << "| " << data[i][data[0].size() - 1];
 		cout << endl;
